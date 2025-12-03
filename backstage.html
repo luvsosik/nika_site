@@ -7,40 +7,39 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;800&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet">
     <style>
         :root { --bg-gradient: linear-gradient(-45deg, #0f2027, #203a43, #2c5364, #4b134f, #1a1a2e); --text-main: #ffffff; --text-secondary: rgba(255, 255, 255, 0.8); --accent-color: #00f2fe; --glass-bg: rgba(255, 255, 255, 0.1); --glass-border: rgba(255, 255, 255, 0.2); --glass-shadow: 0 8px 32px rgba(0,0,0,0.37); --card-hover: rgba(255, 255, 255, 0.15); }
-        body { margin: 0; font-family: "Montserrat", sans-serif; background: var(--bg-gradient); background-size: 400% 400%; color: var(--text-main); animation: gradientBG 20s ease infinite; min-height: 100vh; }
+        body { margin: 0; font-family: "Montserrat", sans-serif; background: var(--bg-gradient); background-size: 400% 400%; color: var(--text-main); animation: gradientBG 20s ease infinite; min-height: 100vh; overflow-x: hidden; }
         @keyframes gradientBG { 0% {background-position: 0% 50%;} 50% {background-position: 100% 50%;} 100% {background-position: 0% 50%;} }
-        nav { position: sticky; top: 0; background: var(--glass-bg); border-bottom: 1px solid var(--glass-border); backdrop-filter: blur(12px); z-index: 1000; padding: 10px 0; }
-        nav .container { display: flex; justify-content: center; gap: 25px; align-items: center; }
-        nav a { color: var(--text-main); text-decoration: none; font-weight: 600; padding: 8px 12px; border-radius: 10px; transition: 0.3s; }
-        nav a:hover { background: var(--accent-color); color: #000; }
-        .container { max-width: 900px; margin: auto; padding: 20px; }
-        header { text-align: center; padding: 60px 20px; }
-        header h1 { font-size: 3.5rem; font-family: "Playfair Display", serif; text-transform: uppercase; margin-bottom: 10px; }
         
+        /* Navigation */
+        nav { position: sticky; top: 0; background: var(--glass-bg); border-bottom: 1px solid var(--glass-border); backdrop-filter: blur(12px); z-index: 1000; padding: 15px 0; }
+        nav .container { display: flex; justify-content: center; gap: 25px; align-items: center; flex-wrap: wrap; }
+        nav a { color: var(--text-main); text-decoration: none; font-weight: 600; padding: 8px 12px; border-radius: 10px; transition: 0.3s; display: flex; align-items: center; gap: 8px;}
+        nav a:hover { background: var(--accent-color); color: #000; }
+        
+        .container { max-width: 900px; margin: auto; padding: 20px; }
+        
+        /* Header */
+        header { text-align: center; padding: 60px 20px; }
+        header h1 { font-size: 3.5rem; font-family: "Playfair Display", serif; text-transform: uppercase; margin-bottom: 10px; line-height: 1.1; }
+        
+        /* Cards */
         .article-card { background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: 15px; padding: 40px; margin-bottom: 40px; backdrop-filter: blur(10px); position: relative; }
         
-        /* Стиль для дат */
+        /* Meta & Dates */
         .article-meta { display: flex; justify-content: flex-end; margin-bottom: 10px; }
-        .article-date { 
-            background: rgba(255, 255, 255, 0.1); 
-            color: var(--accent-color); 
-            padding: 5px 15px; 
-            border-radius: 20px; 
-            font-size: 0.85rem; 
-            font-weight: 600; 
-            display: inline-flex; 
-            align-items: center; 
-            gap: 8px;
-            border: 1px solid rgba(0, 242, 254, 0.3);
-        }
+        .article-date { background: rgba(255, 255, 255, 0.1); color: var(--accent-color); padding: 5px 15px; border-radius: 20px; font-size: 0.85rem; font-weight: 600; display: inline-flex; align-items: center; gap: 8px; border: 1px solid rgba(0, 242, 254, 0.3); }
 
-        h2 { color: var(--accent-color); margin-top: 0; margin-bottom: 10px; font-size: 2rem; line-height: 1.2; }
-        h3 { color: var(--text-main); margin-top: 30px; margin-bottom: 15px; border-left: 4px solid var(--accent-color); padding-left: 15px;}
+        /* Typography */
+        h2 { color: var(--accent-color); margin-top: 0; margin-bottom: 15px; font-size: 2rem; line-height: 1.2; word-wrap: break-word; }
+        h3 { color: var(--text-main); margin-top: 30px; margin-bottom: 15px; border-left: 4px solid var(--accent-color); padding-left: 15px; font-size: 1.3rem;}
         .author { font-style: italic; color: var(--text-secondary); margin-bottom: 25px; display: block; font-size: 0.95rem; border-bottom: 1px solid var(--glass-border); padding-bottom: 15px; width: 100%; }
-        
+        p { line-height: 1.6; }
+
+        /* Interview Styles */
         .interview-q { font-weight: 800; color: var(--accent-color); margin-top: 25px; margin-bottom: 10px; display: block; }
         .interview-a { margin-bottom: 20px; line-height: 1.6; }
         
+        /* Video */
         .video-container { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 15px; margin-top: 20px; box-shadow: var(--glass-shadow); }
         .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
         
@@ -48,14 +47,36 @@
         .back-btn:hover { background: var(--accent-color); color: #000; }
         
         .intro-text { font-size: 1.1rem; line-height: 1.6; color: var(--text-secondary); margin-bottom: 30px; padding-bottom: 10px; }
+        .article-content a { color: var(--accent-color); text-decoration: underline; word-break: break-all; }
+
+        /* --- MEDIA QUERIES --- */
+        
+        /* Мобільні пристрої (до 768px) */
+        @media(max-width: 768px) {
+            /* Меню */
+            nav .container { gap: 10px; font-size: 0.9rem; }
+            nav a { padding: 5px 10px; }
+            
+            /* Заголовок */
+            header { padding: 40px 15px; }
+            header h1 { font-size: 2rem; }
+            
+            /* Картки */
+            .article-card { padding: 20px; margin-bottom: 30px; }
+            h2 { font-size: 1.5rem; }
+            
+            /* Відео та цитати */
+            .intro-text { font-size: 1rem; }
+            .interview-q { font-size: 1rem; }
+        }
     </style>
 </head>
 <body>
     <nav>
         <div class="container">
-            <a href="index.html">⬅ На Головну</a>
+            <a href="index.html">🏠 На Головну</a>
             <span style="opacity: 0.5;">|</span>
-            <a href="analytics.html">МедіаРозбір</a>
+            <a href="analytics.html">🔎 МедіаРозбір</a>
         </div>
     </nav>
 

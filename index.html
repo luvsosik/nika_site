@@ -47,6 +47,7 @@
             background-size: 400% 400%;
             color: var(--text-main);
             animation: gradientBG 20s ease infinite;
+            overflow-x: hidden; /* Важливо для мобільних */
         }
 
         @keyframes gradientBG {
@@ -69,6 +70,7 @@
             display: flex;
             justify-content: center;
             gap: 25px;
+            flex-wrap: wrap; /* Дозволяє перенос меню на малих екранах */
         }
 
         nav a {
@@ -78,6 +80,9 @@
             padding: 8px 12px;
             border-radius: 10px;
             transition: 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px; /* Відступ для смайлика */
         }
 
         nav a:hover { background: var(--accent-color); color: #000; }
@@ -173,7 +178,7 @@
 
         .rubric-icon {font-size: 3rem; margin-bottom: 10px;}
 
-        /* Works Grid (Залишив стиль, якщо знадобиться для новин, але секцію матеріалів видалив) */
+        /* Works Grid */
         .works-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill,minmax(300px,1fr));
@@ -222,15 +227,21 @@
             align-items: center;
             backdrop-filter: blur(8px);
             z-index: 3000;
+            padding: 10px; /* Відступ для мобільних */
+            box-sizing: border-box;
         }
 
         .modal-content {
             background: var(--modal-bg);
             border: 1px solid var(--accent-color);
             border-radius: 15px;
-            width: 85%;
+            width: 100%;
             max-width: 800px;
-            overflow: hidden;
+            max-height: 90vh; /* Щоб не вилазило за екран телефону */
+            overflow-y: auto; /* Скрол */
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
         }
 
         .modal-image { width: 100%; height: 320px; object-fit: cover; }
@@ -243,9 +254,37 @@
             border-top: 1px solid var(--glass-border);
         }
 
-        @media(max-width:900px){
-            header h1 { font-size: 3.2rem; }
-            .concept-grid { grid-template-columns: 1fr; }
+        /* --- АДАПТИВНІСТЬ (Media Queries) --- */
+        
+        /* Планшети і малі ноутбуки */
+        @media(max-width: 1024px){
+            header h1 { font-size: 3.5rem; }
+            .works-grid { grid-template-columns: 1fr 1fr; }
+        }
+
+        /* Мобільні телефони */
+        @media(max-width: 768px){
+            header { padding: 80px 15px; }
+            header h1 { font-size: 2.5rem; }
+            .subtitle { font-size: 1rem; }
+            
+            nav .container { gap: 10px; }
+            nav a { font-size: 0.9rem; padding: 6px 10px; }
+
+            .glass-panel { padding: 25px; }
+            .section-title { font-size: 2rem; }
+            
+            .concept-grid { grid-template-columns: 1fr; gap: 30px; }
+            .editor-photo { height: 250px; }
+            
+            .works-grid { grid-template-columns: 1fr; } /* Одна колонка для новин */
+            
+            .work-overlay { opacity: 1; background: linear-gradient(to top, rgba(0,0,0,0.9), transparent); } /* Текст завжди видно на мобільному */
+            
+            .modal-image { height: 200px; }
+            .modal-body { padding: 20px; }
+            
+            .theme-toggle-btn { top: auto; bottom: 20px; right: 20px; } /* Кнопка теми знизу, щоб було зручно */
         }
     </style>
 </head>
@@ -254,9 +293,9 @@
 
     <nav>
         <div class="container">
-            <a href="#concept">Про нас</a>
-            <a href="#top-news">Новини</a> 
-            <a href="#rubrics">Рубрики</a>
+            <a href="#concept">👋 Про нас</a>
+            <a href="#top-news">📰 Новини</a> 
+            <a href="#rubrics">📂 Рубрики</a>
         </div>
     </nav>
 
