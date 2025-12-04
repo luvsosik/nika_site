@@ -5,13 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>За Лаштунками | Студентський Медіапроєкт</title>
     <meta name="description" content="Студентський медіапроєкт про те, як працює журналістика зсередини.">
-    <meta name="keywords" content="журналістика, медіа, процес створення новин, редакція, студентське медіа">
-
-    <meta property="og:title" content="За Лаштунками — медіа про медіа" />
-    <meta property="og:description" content="Простір, де журналістика відкриває свої таємниці." />
-    <meta property="og:image" content="https://images.unsplash.com/photo-1535905496755-26ae35d0ae54?auto=format&fit=crop&w=800&q=80" />
-    <meta property="og:type" content="website" />
-
+    
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;800&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet">
 
     <style>
@@ -47,7 +41,8 @@
             background-size: 400% 400%;
             color: var(--text-main);
             animation: gradientBG 20s ease infinite;
-            overflow-x: hidden; /* Важливо для мобільних */
+            overflow-x: hidden; 
+            transition: color 0.3s, background 0.3s;
         }
 
         @keyframes gradientBG {
@@ -70,7 +65,7 @@
             display: flex;
             justify-content: center;
             gap: 25px;
-            flex-wrap: wrap; /* Дозволяє перенос меню на малих екранах */
+            flex-wrap: wrap; 
         }
 
         nav a {
@@ -82,15 +77,21 @@
             transition: 0.3s;
             display: flex;
             align-items: center;
-            gap: 8px; /* Відступ для смайлика */
+            gap: 8px;
         }
 
         nav a:hover { background: var(--accent-color); color: #000; }
 
-        .theme-toggle-btn {
+        .controls-container {
             position: fixed;
             top: 20px;
             right: 20px;
+            display: flex;
+            gap: 10px;
+            z-index: 2000;
+        }
+
+        .control-btn {
             height: 50px;
             width: 50px;
             cursor: pointer;
@@ -101,9 +102,11 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            z-index: 2000;
             font-size: 24px;
+            transition: 0.3s;
+            color: var(--text-main);
         }
+        .control-btn:hover { background: var(--accent-color); }
 
         header {
             text-align: center;
@@ -227,7 +230,7 @@
             align-items: center;
             backdrop-filter: blur(8px);
             z-index: 3000;
-            padding: 10px; /* Відступ для мобільних */
+            padding: 10px; 
             box-sizing: border-box;
         }
 
@@ -237,8 +240,8 @@
             border-radius: 15px;
             width: 100%;
             max-width: 800px;
-            max-height: 90vh; /* Щоб не вилазило за екран телефону */
-            overflow-y: auto; /* Скрол */
+            max-height: 90vh; 
+            overflow-y: auto; 
             overflow-x: hidden;
             display: flex;
             flex-direction: column;
@@ -254,15 +257,12 @@
             border-top: 1px solid var(--glass-border);
         }
 
-        /* --- АДАПТИВНІСТЬ (Media Queries) --- */
-        
-        /* Планшети і малі ноутбуки */
+        /* --- MEDIA QUERIES --- */
         @media(max-width: 1024px){
             header h1 { font-size: 3.5rem; }
             .works-grid { grid-template-columns: 1fr 1fr; }
         }
 
-        /* Мобільні телефони */
         @media(max-width: 768px){
             header { padding: 80px 15px; }
             header h1 { font-size: 2.5rem; }
@@ -277,14 +277,14 @@
             .concept-grid { grid-template-columns: 1fr; gap: 30px; }
             .editor-photo { height: 250px; }
             
-            .works-grid { grid-template-columns: 1fr; } /* Одна колонка для новин */
+            .works-grid { grid-template-columns: 1fr; }
             
-            .work-overlay { opacity: 1; background: linear-gradient(to top, rgba(0,0,0,0.9), transparent); } /* Текст завжди видно на мобільному */
+            .work-overlay { opacity: 1; background: linear-gradient(to top, rgba(0,0,0,0.9), transparent); }
             
             .modal-image { height: 200px; }
             .modal-body { padding: 20px; }
             
-            .theme-toggle-btn { top: auto; bottom: 20px; right: 20px; } /* Кнопка теми знизу, щоб було зручно */
+            .controls-container { top: auto; bottom: 20px; right: 20px; }
         }
     </style>
 </head>
@@ -293,28 +293,31 @@
 
     <nav>
         <div class="container">
-            <a href="#concept">👋 Про нас</a>
-            <a href="#top-news">📰 Новини</a> 
-            <a href="#rubrics">📂 Рубрики</a>
+            <a href="#concept"><span data-key="nav_about">👋 Про нас</span></a>
+            <a href="#top-news"><span data-key="nav_news">📰 Новини</span></a> 
+            <a href="#rubrics"><span data-key="nav_rubrics">📂 Рубрики</span></a>
         </div>
     </nav>
 
-    <button class="theme-toggle-btn" id="themeToggle">🌙</button>
+    <div class="controls-container">
+        <button class="control-btn" id="langToggle">🇺🇦</button>
+        <button class="control-btn" id="themeToggle">🌙</button>
+    </div>
 
     <header>
-        <h1>За Лаштунками</h1>
-        <p class="subtitle">Простір, де журналістика відкриває свої таємниці</p>
+        <h1 data-key="header_h1">За Лаштунками</h1>
+        <p class="subtitle" data-key="header_sub">Простір, де журналістика відкриває свої таємниці</p>
     </header>
 
     <div class="container">
 
         <section id="concept" class="glass-panel">
-            <h2 class="section-title">Вітальне слово від редакції</h2>
+            <h2 class="section-title" data-key="concept_title">Вітальне слово від редакції</h2>
 
             <div class="concept-grid">
                 <div>
-                    <h3>Ласкаво просимо на «За Лаштунками»</h3>
-                    <p>
+                    <h3 data-key="concept_h3_1">Ласкаво просимо на «За Лаштунками»</h3>
+                    <p data-key="concept_p1">
                         Це простір, де журналістика відкриває свої таємниці. Тут ви не просто бачите готовий матеріал, 
                         а можете заглянути в процес його створення: як народжується ідея, як перевіряються факти, як формується сюжет і приймаються редакційні рішення.
                         Цей сайт створений для тих, хто хоче зрозуміти роботу журналістів зсередини: студентів журфаку, молодих журналістів, а також усіх, 
@@ -322,19 +325,19 @@
                     </p>
                     <br>
 
-                    <h3>Навіщо ми це робимо?</h3>
-                    <p>
+                    <h3 data-key="concept_h3_2">Навіщо ми це робимо?</h3>
+                    <p data-key="concept_p2">
                         Ми прагнемо показати, що медіа — це не лише заголовки та картинки, а складний, живий процес, де кожне рішення важливе, а кожна деталь має значення.
                     </p>
                     <br>
 
-                    <h3>Що ви тут знайдете?</h3>
-                    <p>
+                    <h3 data-key="concept_h3_3">Що ви тут знайдете?</h3>
+                    <p data-key="concept_p3">
                         На цьому сайті — головні події факультету, інтерв’ю, аналітика та живі студентські історії.
                          Ми показуємо журналістику зсередини: як вона вивчається, як працює і чим живе наша спільнота щодня.
                     </p>
 
-                    <p style="margin-top:20px; font-style: italic; color: var(--text-secondary);">
+                    <p style="margin-top:20px; font-style: italic; color: var(--text-secondary);" data-key="concept_footer">
                         Ласкаво просимо за лаштунки журналістики.
                     </p>
                 </div>
@@ -343,48 +346,46 @@
                     <img class="editor-photo" 
                          src="https://i.ibb.co/ksTR7j4k/2025-12-04-010845399.png"
                          alt="Редакційний процес">
-                    <p style="text-align:center; color:var(--text-secondary); font-style: italic; margin-top:10px;">  
-                    </p>
                 </div>
             </div>
         </section>
 
         <section id="top-news" class="glass-panel">
-            <h2 class="section-title">Головна новина дня</h2>
+            <h2 class="section-title" data-key="news_main_title">Головна новина дня</h2>
 
             <div class="work-item" style="height:350px; margin-bottom:35px;" onclick="openModal('mainNews')">
                 <img src="https://i.ibb.co/jkLPTTpn/2025-12-03-234119442.png">
                 <div class="work-overlay">
-                    <h3 style="font-size:2rem;">Посвята першокурсників у Fest Republic: яскравий старт студентського життя</h3>
-                    <p>Подія дня</p>
+                    <h3 style="font-size:2rem;" data-key="news_1_title">Посвята першокурсників у Fest Republic: яскравий старт студентського життя</h3>
+                    <p data-key="news_1_tag">Подія дня</p>
                 </div>
             </div>
 
-            <h2 class="section-title" style="margin-top:50px;">Останні новини</h2>
+            <h2 class="section-title" style="margin-top:50px;" data-key="news_latest_title">Останні новини</h2>
 
             <div class="works-grid">
 
                 <div class="work-item" onclick="openModal('n1')">
                     <img src="https://i.ibb.co/CKb4PrSD/IMG-1112.jpg">
                     <div class="work-overlay">
-                        <h3>Першокурсники ЛНУ почали підготовку до сесії: хвилювання та перші навчальні стратегії</h3>
-                        <p>Студентське життя</p>
+                        <h3 data-key="news_2_title">Першокурсники ЛНУ почали підготовку до сесії: хвилювання та перші навчальні стратегії</h3>
+                        <p data-key="news_2_tag">Студентське життя</p>
                     </div>
                 </div>
 
                 <div class="work-item" onclick="openModal('n2')">
                     <img src="https://i.ibb.co/R4hXpZcK/IMG-1113.jpg">
                     <div class="work-overlay">
-                        <h3>Студенти скаржаться на різкий запах у корпусі під час ремонту</h3>
-                        <p>Журфак</p>
+                        <h3 data-key="news_3_title">Студенти скаржаться на різкий запах у корпусі під час ремонту</h3>
+                        <p data-key="news_3_tag">Журфак</p>
                     </div>
                 </div>
 
                 <div class="work-item" onclick="openModal('n3')">
                     <img src="https://i.ibb.co/MTRYFGL/IMG-1111.jpg">
                     <div class="work-overlay">
-                        <h3>Зустріч із гуртом Shmalgauzen у Головному корпусі ЛНУ: подія з благодійною метою</h3>
-                        <p>Заходи</p>
+                        <h3 data-key="news_4_title">Зустріч із гуртом Shmalgauzen у Головному корпусі ЛНУ: подія з благодійною метою</h3>
+                        <p data-key="news_4_tag">Заходи</p>
                     </div>
                 </div>
 
@@ -392,20 +393,20 @@
         </section>
 
         <section id="rubrics">
-            <h2 class="section-title">Рубрики</h2>
+            <h2 class="section-title" data-key="rubrics_title">Рубрики</h2>
 
             <div class="rubrics-grid">
 
                 <a href="backstage.html" class="glass-panel rubric-card" style="text-decoration:none; color:inherit; display:block; transition:0.3s;">
                     <span class="rubric-icon">🎥</span>
-                    <h3>Майстерня Журналіста</h3>
-                    <p>Практита майбутніх журналістів.<br><br>Натисніть, щоб переглянути</p>
+                    <h3 data-key="rubric_1_title">Майстерня Журналіста</h3>
+                    <p data-key="rubric_1_desc">Практита майбутніх журналістів.<br><br>Натисніть, щоб переглянути</p>
                 </a>
 
                 <a href="analytics.html" class="glass-panel rubric-card" style="text-decoration:none; color:inherit; display:block; transition:0.3s;">
                     <span class="rubric-icon">🔎</span>
-                    <h3>МедіаРозбір</h3>
-                    <p>Аналіз, розбір, етика.<br><br>Натисніть, щоб переглянути</p>
+                    <h3 data-key="rubric_2_title">МедіаРозбір</h3>
+                    <p data-key="rubric_2_desc">Аналіз, розбір, етика.<br><br>Натисніть, щоб переглянути</p>
                 </a>
 
             </div>
@@ -413,7 +414,7 @@
 
     </div>
 
-    <footer>
+    <footer data-key="footer_text">
         © 2025 «За Лаштунками». Студентський Медіапроєкт. 
     </footer>
 
@@ -429,44 +430,156 @@
 
     <script>
         const themeBtn = document.getElementById("themeToggle");
+        const langBtn = document.getElementById("langToggle");
         const body = document.body;
 
-        const savedTheme = localStorage.getItem("theme") || "dark";
-        body.setAttribute("data-theme", savedTheme);
-        themeBtn.innerText = savedTheme === "dark" ? "🌙" : "☀️";
-
-        themeBtn.onclick = () => {
-            const current = body.getAttribute("data-theme");
-            const next = current === "dark" ? "light" : "dark";
-            body.setAttribute("data-theme", next);
-            localStorage.setItem("theme", next);
-            themeBtn.innerText = next === "dark" ? "🌙" : "☀️";
-        };
-
+        // Content Data
         const works = {
             mainNews: {
-                title: "Посвята першокурсників у Fest Republic: яскравий старт",
-                text: "Профбюро журналістики стало організатором великої та довгоочікуваної події – посвяти першокурсників 2025 року, що відбулася 21 вересня у Fest Republic. Про урочистість та найяскравіші моменти профбюро повідомило на своєму офіційному Instagram-акаунті: <a href='https://www.instagram.com/profjourn_lnu' target='_blank' style='color:var(--accent-color); text-decoration: underline;'>@profjourn_lnu</a><br><br>На посвяту зібралися десятки студентів – як новачки, так і старші курси. Атмосфера була гучною, жвавою та дуже «першокурсницькою»: знайомства, сміх, фото, перші внутрішні жарти і відчуття того, що всі вже частина одного факультету.<br><br>Втім, враження були різні. Студентка Шандрук Вероніка поділилася власним відгуком: «Було весело, проте музика бажає кращого».<br><br>Посвята стала стартовою точкою для першокурсників, які тепер офіційно долучилися до великої спільноти факультету журналістики.",
-                img: "https://i.ibb.co/jkLPTTpn/2025-12-03-234119442.png"
+                img: "https://i.ibb.co/jkLPTTpn/2025-12-03-234119442.png",
+                uk: {
+                    title: "Посвята першокурсників у Fest Republic: яскравий старт",
+                    text: "Профбюро журналістики стало організатором великої та довгоочікуваної події – посвяти першокурсників 2025 року, що відбулася 21 вересня у Fest Republic. Про урочистість та найяскравіші моменти профбюро повідомило на своєму офіційному Instagram-акаунті: <a href='https://www.instagram.com/profjourn_lnu' target='_blank' style='color:var(--accent-color); text-decoration: underline;'>@profjourn_lnu</a><br><br>На посвяту зібралися десятки студентів – як новачки, так і старші курси. Атмосфера була гучною, жвавою та дуже «першокурсницькою»: знайомства, сміх, фото, перші внутрішні жарти і відчуття того, що всі вже частина одного факультету.<br><br>Втім, враження були різні. Студентка Шандрук Вероніка поділилася власним відгуком: «Було весело, проте музика бажає кращого».<br><br>Посвята стала стартовою точкою для першокурсників, які тепер офіційно долучилися до великої спільноти факультету журналістики."
+                },
+                en: {
+                    title: "Freshmen Initiation at Fest Republic: A Bright Start",
+                    text: "The Journalism Trade Union organized a major and long-awaited event - the 2025 Freshmen Initiation, which took place on September 21 at Fest Republic. The trade union reported on the celebration and highlights on its official Instagram account: <a href='https://www.instagram.com/profjourn_lnu' target='_blank' style='color:var(--accent-color); text-decoration: underline;'>@profjourn_lnu</a><br><br>Dozens of students gathered for the initiation - both newcomers and seniors. The atmosphere was loud, lively, and very 'freshman-like': introductions, laughter, photos, first inside jokes, and the feeling that everyone is now part of one faculty.<br><br>However, impressions varied. Student Veronika Shandruk shared her own feedback: 'It was fun, but the music could be better.'<br><br>The initiation became a starting point for freshmen, who have now officially joined the large community of the Faculty of Journalism."
+                }
             },
-            
             n1: {
-                title: "Першокурсники ЛНУ почали підготовку до сесії: хвилювання та перші навчальні стратегії",
-                text: "У ЛНУ ім. Івана Франка наближається перша зимова сесія, і студенти-першокурсники вже активно включаються у підготовку. Для багатьох це перший серйозний університетський іспитовий досвід, тому хвилювання — цілком природне.<br><br>Студентка факультету журналістики Шандрук Вероніка розповіла про свої перші кроки та емоції перед сесією:«Поки не зовсім зрозуміло, що таке сесія. Я переживаю, але вже починаю готуватися. Намагаюсь кожен день вчити одну тему».<br><br>Першокурсники поступово формують власну стратегію навчання, переглядають матеріали семестру та визначають пріоритети перед іспитами. Університетське середовище, викладачі й старші курси також активно підтримують новачків порадами та матеріалами.<br><br>Підготовка йде, і попереду — перше справжнє випробування студентського життя.",
-                img: "https://i.ibb.co/CKb4PrSD/IMG-1112.jpg"
+                img: "https://i.ibb.co/CKb4PrSD/IMG-1112.jpg",
+                uk: {
+                    title: "Першокурсники ЛНУ почали підготовку до сесії",
+                    text: "У ЛНУ ім. Івана Франка наближається перша зимова сесія, і студенти-першокурсники вже активно включаються у підготовку. Для багатьох це перший серйозний університетський іспитовий досвід, тому хвилювання — цілком природне.<br><br>Студентка факультету журналістики Шандрук Вероніка розповіла про свої перші кроки та емоції перед сесією: «Поки не зовсім зрозуміло, що таке сесія. Я переживаю, але вже починаю готуватися. Намагаюсь кожен день вчити одну тему».<br><br>Першокурсники поступово формують власну стратегію навчання, переглядають матеріали семестру та визначають пріоритети перед іспитами. Університетське середовище, викладачі й старші курси також активно підтримують новачків порадами та матеріалами.<br><br>Підготовка йде, і попереду — перше справжнє випробування студентського життя."
+                },
+                en: {
+                    title: "LNU Freshmen Begin Exam Preparation",
+                    text: "The first winter session is approaching at Ivan Franko National University of Lviv, and first-year students are already actively getting involved in preparation. For many, this is the first serious university exam experience, so anxiety is quite natural.<br><br>Veronika Shandruk, a journalism student, spoke about her first steps and emotions before the session: 'It's not entirely clear what the session is yet. I'm worried, but I'm already starting to prepare. I try to learn one topic every day.'<br><br>Freshmen are gradually forming their own learning strategies, reviewing semester materials, and setting priorities before exams. The university environment, teachers, and senior students are also actively supporting newcomers with advice and materials.<br><br>Preparation is underway, and ahead lies the first real test of student life."
+                }
             },
             n2: {
-                title: "Студенти скаржаться на різкий запах у корпусі під час ремонту",
-                 text: "У головному корпусі факультету журналістики на вул. Чупринки, 49 тривають ремонтні роботи, через що студенти дедалі частіше скаржаться на сильний запах фарби та лаку в коридорах. Найбільше відчутно його на першому та другому поверхах, де зараз оновлюють стіни та двері.<br><br>За словами студентів, запах заважає зосередитися під час пар та викликає дискомфорт у тих, хто чутливий до хімічних випарів. Викладачі запевняють, що ремонт на завершальній стадії, а провітрювання приміщень відбувається регулярно.<br><br>Ремонт планують завершити найближчими тижнями.",
-                img: "https://i.ibb.co/R4hXpZcK/IMG-1113.jpg"
+                img: "https://i.ibb.co/R4hXpZcK/IMG-1113.jpg",
+                uk: {
+                    title: "Студенти скаржаться на різкий запах у корпусі під час ремонту",
+                    text: "У головному корпусі факультету журналістики на вул. Чупринки, 49 тривають ремонтні роботи, через що студенти дедалі частіше скаржаться на сильний запах фарби та лаку в коридорах. Найбільше відчутно його на першому та другому поверхах, де зараз оновлюють стіни та двері.<br><br>За словами студентів, запах заважає зосередитися під час пар та викликає дискомфорт у тих, хто чутливий до хімічних випарів. Викладачі запевняють, що ремонт на завершальній стадії, а провітрювання приміщень відбувається регулярно.<br><br>Ремонт планують завершити найближчими тижнями."
+                },
+                en: {
+                    title: "Students Complain About Strong Odor During Renovations",
+                    text: "Renovation work is ongoing in the main building of the Faculty of Journalism at 49 Chuprynky St., causing students to increasingly complain about the strong smell of paint and varnish in the corridors. It is most felt on the first and second floors, where walls and doors are currently being updated.<br><br>According to students, the smell makes it difficult to concentrate during classes and causes discomfort for those sensitive to chemical fumes. Teachers assure that the repair is at the final stage, and the premises are ventilated regularly.<br><br>The renovation is planned to be completed in the coming weeks."
+                }
             },
             n3: {
-                title: "Зустріч із гуртом Shmalgauzen у Головному корпусі ЛНУ: подія з благодійною метою",
-                text: "11 вересня 2025 року в Головному корпусі ЛНУ ім. Івана Франка відбулася творча зустріч із гуртом Shmalgauzen. Про подію повідомило Профбюро факультету журналістики на своїй офіційній Instagram-сторінці.<br><br>Захід мав благодійний характер: щоб потрапити на зустріч, студенти робили донат на підтримку Збройних сил України — від 250 гривень і більше. Попри будній день, подія зібрала чимало охочих поспілкуватися з гуртом, поставити запитання та підтримати армію.<br><br>Зустріч стала не тільки можливістю для студентів побачити артистів наживо, а й нагадуванням про те, як університетська спільнота продовжує підтримувати ЗСУ через культурні ініціативи.",
-                img: "https://i.ibb.co/MTRYFGL/IMG-1111.jpg"
+                img: "https://i.ibb.co/MTRYFGL/IMG-1111.jpg",
+                uk: {
+                    title: "Зустріч із гуртом Shmalgauzen: подія з благодійною метою",
+                    text: "11 вересня 2025 року в Головному корпусі ЛНУ ім. Івана Франка відбулася творча зустріч із гуртом Shmalgauzen. Про подію повідомило Профбюро факультету журналістики на своїй офіційній Instagram-сторінці.<br><br>Захід мав благодійний характер: щоб потрапити на зустріч, студенти робили донат на підтримку Збройних сил України — від 250 гривень і більше. Попри будній день, подія зібрала чимало охочих поспілкуватися з гуртом, поставити запитання та підтримати армію.<br><br>Зустріч стала не тільки можливістю для студентів побачити артистів наживо, а й нагадуванням про те, як університетська спільнота продовжує підтримувати ЗСУ через культурні ініціативи."
+                },
+                en: {
+                    title: "Meeting with Shmalgauzen Band: A Charity Event",
+                    text: "On September 11, 2025, a creative meeting with the band Shmalgauzen took place in the Main Building of Ivan Franko National University of Lviv. The event was reported by the Journalism Faculty Trade Union on its official Instagram page.<br><br>The event was charitable: to attend the meeting, students made a donation to support the Armed Forces of Ukraine - from 250 hryvnias and more. Despite being a weekday, the event gathered many people willing to communicate with the band, ask questions, and support the army.<br><br>The meeting was not only an opportunity for students to see the artists live but also a reminder of how the university community continues to support the Armed Forces of Ukraine through cultural initiatives."
+                }
             }
         };
 
+        const translations = {
+            uk: {
+                nav_about: "👋 Про нас",
+                nav_news: "📰 Новини",
+                nav_rubrics: "📂 Рубрики",
+                header_h1: "За Лаштунками",
+                header_sub: "Простір, де журналістика відкриває свої таємниці",
+                concept_title: "Вітальне слово від редакції",
+                concept_h3_1: "Ласкаво просимо на «За Лаштунками»",
+                concept_p1: "Це простір, де журналістика відкриває свої таємниці. Тут ви не просто бачите готовий матеріал, а можете заглянути в процес його створення: як народжується ідея, як перевіряються факти, як формується сюжет і приймаються редакційні рішення. Цей сайт створений для тих, хто хоче зрозуміти роботу журналістів зсередини: студентів журфаку, молодих журналістів, а також усіх, хто цікавиться, як формується медіа-продукт у сучасному світі.",
+                concept_h3_2: "Навіщо ми це робимо?",
+                concept_p2: "Ми прагнемо показати, що медіа — це не лише заголовки та картинки, а складний, живий процес, де кожне рішення важливе, а кожна деталь має значення.",
+                concept_h3_3: "Що ви тут знайдете?",
+                concept_p3: "На цьому сайті — головні події факультету, інтерв’ю, аналітика та живі студентські історії. Ми показуємо журналістику зсередини: як вона вивчається, як працює і чим живе наша спільнота щодня.",
+                concept_footer: "Ласкаво просимо за лаштунки журналістики.",
+                news_main_title: "Головна новина дня",
+                news_1_title: "Посвята першокурсників у Fest Republic: яскравий старт студентського життя",
+                news_1_tag: "Подія дня",
+                news_latest_title: "Останні новини",
+                news_2_title: "Першокурсники ЛНУ почали підготовку до сесії: хвилювання та перші навчальні стратегії",
+                news_2_tag: "Студентське життя",
+                news_3_title: "Студенти скаржаться на різкий запах у корпусі під час ремонту",
+                news_3_tag: "Журфак",
+                news_4_title: "Зустріч із гуртом Shmalgauzen у Головному корпусі ЛНУ: подія з благодійною метою",
+                news_4_tag: "Заходи",
+                rubrics_title: "Рубрики",
+                rubric_1_title: "Майстерня Журналіста",
+                rubric_1_desc: "Практита майбутніх журналістів.<br><br>Натисніть, щоб переглянути",
+                rubric_2_title: "МедіаРозбір",
+                rubric_2_desc: "Аналіз, розбір, етика.<br><br>Натисніть, щоб переглянути",
+                footer_text: "© 2025 «За Лаштунками». Студентський Медіапроєкт."
+            },
+            en: {
+                nav_about: "👋 About Us",
+                nav_news: "📰 News",
+                nav_rubrics: "📂 Rubrics",
+                header_h1: "Backstage",
+                header_sub: "A space where journalism reveals its secrets",
+                concept_title: "Welcome Word from the Editors",
+                concept_h3_1: "Welcome to 'Backstage'",
+                concept_p1: "This is a space where journalism reveals its secrets. Here you don't just see the finished material, but you can peek into the process of its creation: how an idea is born, how facts are checked, how a plot is formed, and editorial decisions are made. This site is created for those who want to understand the work of journalists from the inside: journalism students, young journalists, and anyone interested in how a media product is formed in the modern world.",
+                concept_h3_2: "Why do we do this?",
+                concept_p2: "We aim to show that media is not just headlines and pictures, but a complex, living process where every decision is important and every detail matters.",
+                concept_h3_3: "What will you find here?",
+                concept_p3: "On this site — main faculty events, interviews, analytics, and live student stories. We show journalism from the inside: how it is studied, how it works, and what our community lives by every day.",
+                concept_footer: "Welcome backstage of journalism.",
+                news_main_title: "Main News of the Day",
+                news_1_title: "Freshmen Initiation at Fest Republic: A Bright Start to Student Life",
+                news_1_tag: "Event of the Day",
+                news_latest_title: "Latest News",
+                news_2_title: "LNU Freshmen Begin Exam Preparation: Anxiety and First Learning Strategies",
+                news_2_tag: "Student Life",
+                news_3_title: "Students Complain About Strong Odor in Building During Renovations",
+                news_3_tag: "Journalism Faculty",
+                news_4_title: "Meeting with Shmalgauzen Band in LNU Main Building: A Charity Event",
+                news_4_tag: "Events",
+                rubrics_title: "Rubrics",
+                rubric_1_title: "Journalist's Workshop",
+                rubric_1_desc: "Practice of future journalists.<br><br>Click to view",
+                rubric_2_title: "MediaAnalysis",
+                rubric_2_desc: "Analysis, reviews, ethics.<br><br>Click to view",
+                footer_text: "© 2025 «Backstage». Student Media Project."
+            }
+        };
+
+        function applyTheme(theme) {
+            body.setAttribute("data-theme", theme);
+            themeBtn.innerText = theme === "dark" ? "🌙" : "☀️";
+            localStorage.setItem("theme", theme);
+        }
+
+        function applyLang(lang) {
+            const texts = translations[lang];
+            document.querySelectorAll("[data-key]").forEach(el => {
+                const key = el.getAttribute("data-key");
+                if (texts[key]) el.innerHTML = texts[key];
+            });
+            langBtn.innerText = lang === "uk" ? "🇺🇦" : "🇺🇸";
+            localStorage.setItem("lang", lang);
+            document.documentElement.lang = lang;
+        }
+
+        const savedTheme = localStorage.getItem("theme") || "dark";
+        applyTheme(savedTheme);
+
+        const savedLang = localStorage.getItem("lang") || "uk";
+        applyLang(savedLang);
+
+        themeBtn.onclick = () => {
+            const current = body.getAttribute("data-theme");
+            applyTheme(current === "dark" ? "light" : "dark");
+        };
+
+        langBtn.onclick = () => {
+            const current = localStorage.getItem("lang") || "uk";
+            applyLang(current === "uk" ? "en" : "uk");
+        };
+
+        // Modal Logic Updated
         const modal = document.getElementById("myModal");
         const modalImg = document.getElementById("modal-img");
         const modalTitle = document.getElementById("modal-title");
@@ -474,10 +587,13 @@
 
         function openModal(id) {
             if(works[id]) { 
+                const currentLang = localStorage.getItem("lang") || "uk";
+                const content = works[id][currentLang];
+                
                 modal.style.display = "flex";
                 modalImg.src = works[id].img;
-                modalTitle.innerText = works[id].title;
-                modalText.innerHTML = works[id].text;
+                modalTitle.innerText = content.title;
+                modalText.innerHTML = content.text;
             }
         }
 
